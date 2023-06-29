@@ -1,11 +1,11 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = function() {
+const getNotes = () => {
   return "Your notes..."
 }
 
-const addNotes = function(title, body) {
+const addNotes = (title, body) => {
   let notes = loadNotes()
 
   const titles = notes.map( el => el.title ).some( t => t == title)
@@ -24,7 +24,7 @@ const addNotes = function(title, body) {
   saveData(notes)
 }
 
-const removeNote = function(title) {
+const removeNote = (title) => {
   const notes = loadNotes();
   const notes2 = []
   for(let i=0; i<notes.length; i++) {
@@ -42,7 +42,7 @@ const removeNote = function(title) {
   saveData(notes2)
 }
 
-const loadNotes = function() {
+const loadNotes = () => {
   try {
     const dataJSON = fs.readFileSync('./notes.json').toString()
     const data = JSON.parse(dataJSON)
@@ -53,7 +53,7 @@ const loadNotes = function() {
   }
 }
 
-const saveData = function (notes) {
+const saveData = (notes) => {
   fs.writeFileSync('./notes.json', JSON.stringify(notes))
 }
 

@@ -18,7 +18,7 @@ yargs.command({
       demandOption: true
     }
   },
-  handler: function(argv) {
+  handler(argv) {
     notes.addNotes(argv.title, argv.body)
   }
 })
@@ -33,7 +33,7 @@ yargs.command({
       type: "string"
     }
   },
-  handler: function(argv) {
+  handler(argv) {
     notes.removeNote(argv.title)
   }
 })
@@ -49,11 +49,9 @@ yargs.command({
 yargs.command({
   command: "read",
   description: "Supongo que lee una nota",
-  handler: function() {
+  handler() {
     console.log("Aca la tenés")
   }
 })
 
 yargs.parse()
-
-//console.log(yargs.argv)
