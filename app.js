@@ -25,9 +25,16 @@ yargs.command({
 
 yargs.command({
   command: "remove",
-  description: "Esto",
-  handler: function() {
-    console.log("Removió una nota")
+  description: "Revoves an specific note",
+  builder: {
+    title: {
+      describe: "This is the title of the note which will be removed",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler: function(argv) {
+    notes.removeNote(argv.title)
   }
 })
 
