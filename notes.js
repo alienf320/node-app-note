@@ -20,7 +20,7 @@ const addNotes = (title, body) => {
   }
 
   notes.push(newNote)  
-  console.log(chalk.green('Note "${title}" was added!'))
+  console.log(chalk.green(`Note "${title}" was added!`))
   saveData(notes)
 }
 
@@ -42,6 +42,30 @@ const removeNote = (title) => {
   saveData(notes2)
 }
 
+const listNotes = () => {
+  const notes = loadNotes();
+  console.log("-----------------------------------------------------------")
+  console.log(chalk.blue.inverse("Your Notes:"))
+  notes.forEach(note => {
+    console.log(chalk.yellow("•  " + note.title))
+  });
+  console.log("-----------------------------------------------------------")
+}
+
+const readNote = (title) => {
+  const notes = loadNotes();
+  const note = notes.find( note => note.title == title);
+
+  if(note) {
+    console.log("-----------------------------------------------------------")
+    console.log(chalk.magenta.bold(note.title))
+    console.log(note.body)
+    console.log("-----------------------------------------------------------")
+  } else {
+    console.log(chalk.red.inverse("That note does not exist"))
+  }
+}
+
 const loadNotes = () => {
   try {
     const dataJSON = fs.readFileSync('./notes.json').toString()
@@ -60,5 +84,7 @@ const saveData = (notes) => {
 module.exports = {
   getNotes: getNotes,
   addNotes: addNotes,
-  removeNote: removeNote
+  removeNote: removeNote,
+  listNotes: listNotes,
+  readNote: readNote
 }

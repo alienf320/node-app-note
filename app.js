@@ -40,17 +40,24 @@ yargs.command({
 
 yargs.command({
   command: "list",
-  description: "Esto hace una lista",
-  handler: function() {
-    console.log("Muestra las notas")
+  description: "Lists all your notes",
+  handler() {
+    notes.listNotes()
   }
 })
 
 yargs.command({
   command: "read",
-  description: "Supongo que lee una nota",
-  handler() {
-    console.log("Aca la tenés")
+  description: "It reads a note",
+  builder: {
+    title: {
+      describe: "THe title of the note to read",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler(argv) {
+    notes.readNote(argv.title)
   }
 })
 
