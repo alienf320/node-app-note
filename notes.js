@@ -5,7 +5,13 @@ const getNotes = function() {
 }
 
 const addNotes = function(title, body) {
-  let notes = loadNotes();
+  let notes = loadNotes()
+
+  const titles = notes.map( el => el.title ).some( t => t == title)
+  if(titles) {
+    console.log("That title already exists")
+    return 
+  }
   
   const newNote = {
     title: title,
@@ -18,7 +24,7 @@ const addNotes = function(title, body) {
 
 const loadNotes = function() {
   try {
-    const dataJSON = fs.readFileSync('./notes.json').toString
+    const dataJSON = fs.readFileSync('./notes.json').toString()
     const data = JSON.parse(dataJSON)
     return data;
   } catch {
