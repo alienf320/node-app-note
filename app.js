@@ -61,4 +61,19 @@ yargs.command({
   }
 })
 
+yargs.command({
+  command: "update",
+  description: "It updates a note",
+  builder: {
+    title: {
+      describe: "The title of the note to read",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler(argv) {
+    notes.updateNotes(argv.title);
+  }
+})
+
 yargs.parse()

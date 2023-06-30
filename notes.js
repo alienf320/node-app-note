@@ -1,5 +1,6 @@
 const fs = require('fs')
 const chalk = require('chalk')
+const inquirer = require('inquirer');
 
 const getNotes = () => {
   return "Your notes..."
@@ -68,10 +69,46 @@ const readNote = (title) => {
   }
 }
 
-const updateNotes = (title) => {
+const updateNotes = async (title) => {
   const notes = loadNotes();
 
-}
+  if (notes.length === 0) {
+    console.log(chalk.red.inverse('No notes found.'));
+    return;
+  }
+
+  const notes2 = [];
+
+  for (const note of notes) {
+    if (note.title === title) {
+      try {
+        const answer = await inquirer.prompt({
+          name: 'body',
+          message: 'Write the new body',
+          default: note.body,
+          validate: (input) => (input ? true : 'Please enter a valid body.')
+        });
+
+        const newNote = {
+          title: title,
+          body: answer.body,
+          status: note.status
+        };
+
+        console.log(chalk.yellow('Note updated'));
+
+        notes2.push(newNote);
+      } catch (error) {
+        console.error(chalk.red.inverse('An error occurred:'), error);
+      }
+    } else {
+      notes2.push(note);
+    }
+  }
+
+  saveData(notes2);
+};
+
 
 
 const loadNotes = () => {
@@ -94,5 +131,6 @@ module.exports = {
   addNotes: addNotes,
   removeNote: removeNote,
   listNotes: listNotes,
-  readNote: readNote
+  readNote: readNote,
+  updateNotes: updateNotes
 }
