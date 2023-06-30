@@ -5,7 +5,7 @@ const getNotes = () => {
   return "Your notes..."
 }
 
-const addNotes = (title, body) => {
+const addNotes = (title, body, status = false) => {
   let notes = loadNotes()
 
   const titles = notes.map( el => el.title ).some( t => t == title)
@@ -16,7 +16,8 @@ const addNotes = (title, body) => {
   
   const newNote = {
     title: title,
-    body: body
+    body: body,
+    status: status
   }
 
   notes.push(newNote)  
@@ -47,7 +48,8 @@ const listNotes = () => {
   console.log("-----------------------------------------------------------")
   console.log(chalk.blue.inverse("Your Notes:"))
   notes.forEach(note => {
-    console.log(chalk.yellow("•  " + note.title))
+    const symbol = note.status ? "[X]  " : "[ ]  " 
+    console.log(chalk.yellow(symbol + note.title))
   });
   console.log("-----------------------------------------------------------")
 }
@@ -65,6 +67,12 @@ const readNote = (title) => {
     console.log(chalk.red.inverse("That note does not exist"))
   }
 }
+
+const updateNotes = (title) => {
+  const notes = loadNotes();
+
+}
+
 
 const loadNotes = () => {
   try {
